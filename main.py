@@ -62,5 +62,5 @@ def loop():
     moveHero(dir_x, dir_y)
 
 while True:
-    os.clearScreen()
+    clearScreen()
     loop()
