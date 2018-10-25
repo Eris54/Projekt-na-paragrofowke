@@ -35,6 +35,8 @@ Przedstawia **świat** gry złożony z lokacji.
 
 Pole `data` przechowuje informację na temat możliwych lokacji w postaci dwuwymiarowej tablicy liczb całkowitych. Wartość `0` reprezentuje brak lokacji. Wartości większe od zera są powiązane z obiektami klasy `Location` w sposób określony przez słownik `descriptions`.
 
+Pola `width` i `height` określają szerokość i wysokość świata gry, w tym przypadku rozmiary tablicy `data`. Program zakłada, że te wartości nie są czytane ani modyfikowane z zewnątrz klasy.
+
 #### Koordynaty świata
 
 Koordynaty świata odpowiadają indeksom używanym z polem `data` obiektu klasy `World`. Pozycja (`x`, `y`) w świecie odpowiada wyrażeniu `data[y][x]`. Stąd wynika, że dozwolone wartości `x` i `y` są z przedziału odpowiednio `[0, self.width)` i `[0, self.height)`. Wyróżnia się następujące kierunki:
