@@ -1,4 +1,5 @@
-import subprocess as sb
+import os
+
 from classes import *
 
 world = World()
@@ -10,6 +11,9 @@ keys = {
     "zachod": "a",
     "wschod": "d",
 }
+
+def clearScreen():
+    os.system('cls' if os.name=='nt' else 'clear')
 
 def getFullOptionName(option_name):
     return f"[{keys[option_name]}] {option_name}"
@@ -58,5 +62,5 @@ def loop():
     moveHero(dir_x, dir_y)
 
 while True:
-    sb.call('cls', shell=True)
+    clearScreen()
     loop()
