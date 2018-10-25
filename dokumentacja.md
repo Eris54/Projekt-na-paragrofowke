@@ -127,5 +127,6 @@ Zmienia pozycję gracza na `next_pos_x = hero.x + direction_x` i `next_pos_y = h
 # Wkład pracy
 
 [justcosmic/bartek] - programowanie, stworzenie dokumentacji
+
 [OrN/kacper] - programowanie, korekta dokumentacji
 
