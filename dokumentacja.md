@@ -123,3 +123,9 @@ Wewnętrznie funkcja ta porównuje przekazany od gracza łańuch znaków `player
 Zmienia pozycję gracza na `next_pos_x = hero.x + direction_x` i `next_pos_y = hero.y + direction_y`, jeśli lokacja na pozycji (`next_pos_x`, `next_pos_y`) istnieje.
 
 `direction_x` i `direction_y` to liczby całkowite określające przesunięcie gracza w świecie. (patrz: koordynaty świata)
+
+# Wkład pracy
+
+[justcosmic/bartek] - programowanie, stworzenie dokumentacji
+[OrN/kacper] - programowanie, korekta dokumentacji
+
