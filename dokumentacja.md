@@ -1,13 +1,29 @@
-# [Title]
-
-
-
+# Paragrafówka
 
 # Dla użytkownika
 
+Program stanowi przykład prostej gry tekstowej, w której zadaniem gracza jest przemieszczanie się po pomieszczeniach w celu odnalezienia wyjścia. Program wyświetla opis obecnego pomieszczenia i możliwe akcje, z których gracz może wybierać, wpisując odpowiadające im symbole i zatwierdzając je przyciskiem Enter.
 
+Uruchomienie programu wymaga interpretera Python w wersji co najmniej 3.6.
 
+## Windows
 
+Ściągnij i zainstaluj [Python](https://www.python.org/downloads/). Następnie otwórz plik `main.py` za pomocą Pythona.
+
+## Linux
+
+Ściągnij i zainstaluj [Python](https://www.python.org/downloads/). Pythona możesz znaleźć również w repozytorium swojej dystrybucji, dla przykładu:
+
+- Ubuntu - wpisz w terminalu `sudo apt install python3`
+- Arch - wpisz w terminalu `sudo pacman -S python`
+
+Sprawdź, czy posiadasz wystarczającą wersję Pythona, wpisując `python3 -V`.
+
+Aby uruchomić program, wpisz `python3 main.py`.
+
+## MacOS
+
+Program nie był testowany na tym systemie, ale powinien działać. Ściągnij i zainstaluj [Python](https://www.python.org/downloads/), a następnie otwórz plik `main.py`, wpisując `python3 main.py` w terminalu.
 
 # Dla programisty
 
