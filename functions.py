@@ -18,7 +18,7 @@ def mainLoop():
         wrongAction = 0
 
     printCurrentLocation()
-    printChoices()
+    printMenu()
     player_choice = input("Wybierz kierunek: ")
     dir_x, dir_y = checkinput(player_choice)
     moveHero(dir_x, dir_y)
@@ -74,7 +74,7 @@ def printChoice(x, y, option_name):
         elif world.data[hero.y][hero.x] == world.data[y][x]:
             print(getFullOptionName(option_name), loc.same_room)
 
-def printChoices():
+def printMenu():
     print(f"Najwyraźniej, twoja lokalizacja to: {hero.x}, {hero.y}")
     print("\nKompas wskazuje:", EndDirection())
     print("Twoje zdrowie to:", hero.hp, '\n')
