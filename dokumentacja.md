@@ -51,6 +51,11 @@ Przedstawia **świat** gry złożony z lokacji.
 
 Pole `data` przechowuje informację na temat możliwych lokacji w postaci dwuwymiarowej tablicy liczb całkowitych. Wartość `0` reprezentuje brak lokacji. Wartości większe od zera są powiązane z obiektami klasy `Location` w sposób określony przez słownik `descriptions`.
 
+Klucze w słowniku `descriptions` mają następujące znaczenie:
+
+- liczby całkowite > 0 - zwykła lokacja
+- `'F'` - wyjście/koniec gry
+
 Pola `width` i `height` określają szerokość i wysokość świata gry, w tym przypadku rozmiary tablicy `data`. Program zakłada, że te wartości nie są czytane ani modyfikowane z zewnątrz klasy.
 
 #### Koordynaty świata
@@ -70,6 +75,10 @@ Inicjalizuje obiekt.
 
 Zwraca wartość typu bool. Mówi, czy na pozycji (x, y) w świecie znajduje się lokacja, do której może udać się gracz. Zakres wartości x, y jest dowolny.
 
+#### `isExit(self, x, y)`
+
+Sprawdza, czy lokacja na pozycji (x, y) jest wyjściem, zwracając wartość boolowską. Metoda zakłada, że taka lokacja istnieje. Jej istnienie można sprawdzić za pomocą metody `exist`.
+
 #### `getAt(self, x, y)`
 
 Zwraca obiekt klasy `Location` znajdujący się na pozycji (x, y). Metoda zakłada, że taki obiekt istnieje. Jego istnienie można sprawdzić za pomocą metody `exist`.
@@ -86,6 +95,8 @@ Reprezentuje **gracza** poprzez jego aktualną pozycję w świecie gry. (patrz: 
 
 ### Zmienne globalne
 
+`game_running` to zmienna boolowska kontrolująca główną pętlę gry.
+
 `world` to instancja klasy `World`.
 
 `hero` to instancja klasy `Character`, `hero.x` oraz `hero.y` są inicjalizowane do pozycji startowej, z której gracz rozpoczyna grę.
@@ -95,7 +106,7 @@ Reprezentuje **gracza** poprzez jego aktualną pozycję w świecie gry. (patrz: 
 Program rozpoczyna się od następującego kawałka kodu:
 
 ```
-while True:
+while game_running:
     clearScreen()
     loop()
 ```
@@ -106,7 +117,7 @@ W każdej iteracji czyszczony jest ekran, a następnie wykonywana jest kolejna i
 
 #### `clearScreen()`
 
-Czyści ekran konsoli w zależności od systemu operacyjnego: dla Windows wywołuje komendę `cls`, dla Linuxa i innych wywołuje `clear`.
+Czyści ekran konsoli, wywołując komendę odpowiednią dla danego systemu operacyjnego.
 
 #### `loop()`
 
@@ -139,6 +150,10 @@ Wewnętrznie funkcja ta porównuje przekazany od gracza łańuch znaków `player
 Zmienia pozycję gracza na `next_pos_x = hero.x + direction_x` i `next_pos_y = hero.y + direction_y`, jeśli lokacja na pozycji (`next_pos_x`, `next_pos_y`) istnieje.
 
 `direction_x` i `direction_y` to liczby całkowite określające przesunięcie gracza w świecie. (patrz: koordynaty świata)
+
+#### `gameOver()`
+
+Ustawia zmienną globalną `game_running` na `False`, tym samym kończąc działanie programu. Wyświetla tekst pożegnalny.
 
 # Wkład pracy
 

@@ -2,6 +2,7 @@ import os
 
 from classes import *
 
+game_running = True
 world = World()
 hero = Character(0, 0)
 
@@ -13,7 +14,7 @@ keys = {
 }
 
 def clearScreen():
-    os.system('cls' if os.name=='nt' else 'clear')
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 def getFullOptionName(option_name):
     return f"[{keys[option_name]}] {option_name}"
@@ -54,13 +55,22 @@ def checkinput(player_choice):
 
     return direction_x, direction_y
 
+def gameOver():
+    global game_running 
+    game_running = False
+    print("Ukonczyles gre.")
+    print("Nacisnij dowolny klawisz, aby kontynuowac.")
+    input()
+
 def loop():
     printCurrentLocation()
     printChoices()
     player_choice = input("Wybierz kierunek: ")
     dir_x, dir_y = checkinput(player_choice)
     moveHero(dir_x, dir_y)
+    if world.isExit(hero.x, hero.y):
+        gameOver()
 
-while True:
+while game_running:
     clearScreen()
     loop()

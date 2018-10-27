@@ -10,13 +10,14 @@ class World:
         [ 0, 0, 0, 2, 0, 3 ],
         [ 0, 0, 0, 3, 2, 1 ],
         [ 0, 0, 0, 0, 0, 1 ],
-        [ 0, 0, 0, 0, 0, 2 ],
+        [ 0, 0, 0, 0, 0, 'F' ],
     ]
 
     descriptions = {
         1: Location("maly pokoj", "Jestes w malym pokoju."),
         2: Location("duzy pokoj", "Jestes w duzym pokoju."),
         3: Location("pokoj", "Jestes w pokoju."),
+        'F': Location("wyjscie", "sfasd"),
     }
 
     def __init__(self):
@@ -29,6 +30,9 @@ class World:
         if y < 0 or y >= self.height:
             return False
         return not self.data[y][x] == 0
+
+    def isExit(self, x, y):
+        return self.data[y][x] == 'F'
 
     def getAt(self, x, y):
         return self.descriptions[self.data[y][x]]
