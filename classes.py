@@ -33,8 +33,8 @@ class World:
 
     def __init__(self, mapa):
         self.data = mapa
-        self.width = len(self.data[0])-1
-        self.height = len(self.data)-1
+        self.width = len(self.data[0])
+        self.height = len(self.data)
 
     def exist(self, x, y):
         if x < 0 or x >= self.width:
