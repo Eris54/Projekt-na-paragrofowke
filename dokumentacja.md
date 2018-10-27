@@ -52,12 +52,11 @@ Przedstawia **świat** gry złożony z lokacji.
 
 Pole `data` przechowuje informację na temat możliwych lokacji w postaci dwuwymiarowej tablicy liczb całkowitych lub znaków. Wartość `0` reprezentuje brak lokacji. Wartości różne od zera są powiązane z obiektami klasy `Location` w sposób określony przez słownik `descriptions`.
 
-Klucze w słowniku `descriptions` mają następujące znaczenie:
+Niektóre klucze w słowniku `descriptions` mają specjalne znaczenie:
 
-- liczby całkowite > 0 - zwykła lokacja
 - `'E'` - wyjście/koniec gry
 
-Pola `width` i `height` określają szerokość i wysokość świata gry, w tym przypadku rozmiary tablicy `data`. Program zakłada, że te wartości nie są czytane ani modyfikowane z zewnątrz klasy.
+Pola `width` i `height` określają szerokość i wysokość świata gry, w tym przypadku rozmiary tablicy `data`.
 
 #### Koordynaty świata
 
@@ -117,11 +116,12 @@ while not Ended:
 ```
 
 ## functions.py
+
 #### `AddTraps(where)`
-Dodaje losowo ustawione pułapki do objektu `where`.
+Dodaje losowo ustawione pułapki do obiektu `where`.
 
 #### `FindEnd(where)`
-Znajduje lokację końcową w objekcie `where`.
+Znajduje lokację końcową w obiekcie `where`.
 
 #### `clearScreen()`
 Czyści ekran konsoli, wywołując komendę odpowiednią dla danego systemu operacyjnego.
