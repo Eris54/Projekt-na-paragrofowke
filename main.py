@@ -131,6 +131,9 @@ def ChangeRooms():
     if str(world.data[hero.y][hero.x]) == '1_1':  ##Zmienianie odwiedzonych pokoi
         hero.hp -= 2
         world.data[hero.y][hero.x] = '1'
+    
+    elif str(world.data[hero.y][hero.x]) == '4':
+        world.data[hero.y][hero.x] = '4_1'
     elif str(world.data[hero.y][hero.x]) == '4_1':
         world.data[hero.y][hero.x] = '4_2'
     elif str(world.data[hero.y][hero.x]) == '4_2':
@@ -152,7 +155,6 @@ def checkinput(player_choice):
         direction_x = -1
 
     elif player_choice == 'q' and str(world.data[hero.y][hero.x]) == '4':
-        world.data[hero.y][hero.x] = '4_1'
         hero.hp += 4
 
     elif player_choice == 'e' and str(world.data[hero.y][hero.x]) == '2':
