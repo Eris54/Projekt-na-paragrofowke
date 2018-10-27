@@ -14,9 +14,7 @@ mapp = [[1,2, 1, 0, 2, 4, 1, 1, 1, 1, 1],
 
 world = World(mapp)
 hero = Character(0, 0, 10)
-world.data = AddTraps(world)
 Ended = False
-EndCoordinates = FindEnd(world)
 wrongAction = False
 
 keys = {
@@ -167,6 +165,8 @@ def checkinput(player_choice):
 
     return direction_x, direction_y
 
+world.data = AddTraps(world)
+EndCoordinates = FindEnd(world)
 print("Uciekając przed bandytami, postanowiłeś się ukryć w pewnej jaskinii.\nNiestety potknąłeś się wpadając do lochów.\nTwój magiczny kompas wskazuje wyjście.")
 input("Naciśnij Enter by zacząć grę!")
 
