@@ -107,9 +107,7 @@ Reprezentuje **gracza** poprzez jego aktualną pozycję w świecie gry. (patrz: 
 
 `keys` - słownik wiążący nazwy możliwych akcji podejmowanych przez gracza z odpowiadającymi im klawiszami.
 
-`counterx`, `countery` służą by ustalić lokację końcową gry
-
-Program wykonuje dwie pętle `for`, służące do ustalenia koordynat końcowej lokacji oraz by dodać do mapy losowe pułapki.
+Program wykonuje dwie funkcje, służące do ustalenia koordynat końcowej lokacji oraz by dodać do mapy losowe pułapki, następnie drukuje wiadomość rozpoczęcia gry.
 
 Program wtedy rozpoczyna główną pętlę kodu:
 
@@ -118,7 +116,7 @@ while not Ended:
     mainLoop()
 ```
 
-### Funkcje
+## functions.py
 
 #### `clearScreen()`
 
@@ -127,6 +125,9 @@ Czyści ekran konsoli, wywołując komendę odpowiednią dla danego systemu oper
 #### `mainLoop()`
 
 Zawiera całą interakcję z użytkownikiem.
+
+#### `AddTraps(where)`
+
 
 #### `printCurrentLocation()`
 
