@@ -55,7 +55,7 @@ def mainLoop():
 
 
 def AddTraps(where):
-    for i in range(20):  ##Dodawanie losowych pułapek
+    for i in range(12):  ##Dodawanie losowych pułapek
         x = randint(0, where.width)
         y = randint(0, where.height)
         if str(where.data[y][x]) == '1':
