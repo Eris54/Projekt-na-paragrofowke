@@ -51,6 +51,7 @@ def mainLoop():
     moveHero(dir_x, dir_y)
     if world.data[hero.y][hero.x] == 'E':
         Ended = 1
+        print("Udało się ukończyć grę!\n gratulacje!")
         input("Naciśnij enter by zakończyć przygodę!")
 
 
@@ -58,8 +59,8 @@ def AddTraps(where):
     for i in range(12):  ##Dodawanie losowych pułapek
         x = randint(0, where.width)
         y = randint(0, where.height)
-        if str(where.data[y][x]) == '1':
-            where.data[y][x] = '1_1'
+        if str(where.data[y-1][x-1]) == '1':
+            where.data[y-1][x-1] = '1_1'
     return where.data
 
 def FindEnd(where):
