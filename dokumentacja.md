@@ -49,7 +49,7 @@ Przedstawia pojedynczą **lokację** w świecie gry. Posiada krótki opis (`shor
 
 Przedstawia **świat** gry złożony z lokacji.
 
-Pole `data` przechowuje informację na temat możliwych lokacji w postaci dwuwymiarowej tablicy liczb całkowitych. Wartość `0` reprezentuje brak lokacji. Wartości większe od zera są powiązane z obiektami klasy `Location` w sposób określony przez słownik `descriptions`.
+Pole `data` przechowuje informację na temat możliwych lokacji w postaci dwuwymiarowej tablicy liczb całkowitych. Wartość `0` reprezentuje brak lokacji. Wartości różne od zera są powiązane z obiektami klasy `Location` w sposób określony przez słownik `descriptions`.
 
 Klucze w słowniku `descriptions` mają następujące znaczenie:
 
