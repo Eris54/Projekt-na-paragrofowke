@@ -13,7 +13,7 @@ mapp = [[1, 2, 1, 0, 2, 4, 1, 1, 1, 1, 1],
         [5, 0, 1, 5, 1, 0, 1, 1, 1, 1, 0]]
 
 world = World(mapp)
-hero = Character(0, 0, 10)
+hero = Character(0, 0, 20)
 Ended = False
 wrongAction = False
 
@@ -158,9 +158,9 @@ def checkinput(player_choice):
     elif player_choice == 'e' and str(world.data[hero.y][hero.x]) == '2':
         chance = randint(0,5)
         if chance <= 1:
-            hero.hp += randint(1, 5)
+            hero.hp += randint(2, 6)
         else:
-            hero.hp -= randint(3, 7)
+            hero.hp -= randint(1, 3)
         world.data[hero.y][hero.x] = '2_1'
 
     return direction_x, direction_y
