@@ -38,23 +38,24 @@ Projekt podzielony jest na dwa pliki:
 
 ### Klasa `Location`
 
-Przedstawia pojedynczą **lokację** w świecie gry. Posiada krótki opis (`short_desc`) wyświetlany, gdy gracz sąsiaduje z tą lokacją, oraz długi opis (`long_desc`) wyświetlany, gdy gracz znajduje się w tej lokacji.
+Przedstawia pojedynczą **lokację** w świecie gry. Posiada krótki opis (`short_desc`) wyświetlany, gdy gracz sąsiaduje z tą lokacją, długi opis (`long_desc`) wyświetlany, gdy gracz znajduje się w tej lokacji oraz opcjonalny opis gdy gracz znajduje się w jednej z wielu części pokoju (`same_room`).
 
-#### Konstruktor `__init__(self, short_desc, long_desc)`
+#### Konstruktor `__init__(self, short_desc, long_desc, same_room = None)`
 
 `short_desc` to łańcuch znaków prezentujący krótki opis lokacji.
 `long_desc` to łańcuch znaków prezentujący rozbudowany opis lokacji.
+`same_room` to łańcuch znaków prezentujący krótki opis lokacji gdy gracz jest w części lokacji. Ten opis nie istnieje dla wszystkich lokacji.
 
 ### Klasa `World`
 
 Przedstawia **świat** gry złożony z lokacji.
 
-Pole `data` przechowuje informację na temat możliwych lokacji w postaci dwuwymiarowej tablicy liczb całkowitych. Wartość `0` reprezentuje brak lokacji. Wartości różne od zera są powiązane z obiektami klasy `Location` w sposób określony przez słownik `descriptions`.
+Pole `data` przechowuje informację na temat możliwych lokacji w postaci dwuwymiarowej tablicy liczb całkowitych lub znaków. Wartość `0` reprezentuje brak lokacji. Wartości różne od zera są powiązane z obiektami klasy `Location` w sposób określony przez słownik `descriptions`.
 
 Klucze w słowniku `descriptions` mają następujące znaczenie:
 
 - liczby całkowite > 0 - zwykła lokacja
-- `'F'` - wyjście/koniec gry
+- `'E'` - wyjście/koniec gry
 
 Pola `width` i `height` określają szerokość i wysokość świata gry, w tym przypadku rozmiary tablicy `data`. Program zakłada, że te wartości nie są czytane ani modyfikowane z zewnątrz klasy.
 
@@ -67,17 +68,14 @@ Koordynaty świata odpowiadają indeksom używanym z polem `data` obiektu klasy 
 - malejące wartości `x` - `zachod`
 - rosnące wartości `x` - `wschod`
 
-#### Konstruktor `__init__(self)`
+#### Konstruktor `__init__(self, mapa)`
 
-Inicjalizuje obiekt.
+Inicjalizuje objekt.
+`mapa` nadaje **mapę** światu.
 
 #### `exist(self, x, y)`
 
 Zwraca wartość typu bool. Mówi, czy na pozycji (x, y) w świecie znajduje się lokacja, do której może udać się gracz. Zakres wartości x, y jest dowolny.
-
-#### `isExit(self, x, y)`
-
-Sprawdza, czy lokacja na pozycji (x, y) jest wyjściem, zwracając wartość boolowską. Metoda zakłada, że taka lokacja istnieje. Jej istnienie można sprawdzić za pomocą metody `exist`.
 
 #### `getAt(self, x, y)`
 
@@ -87,31 +85,38 @@ Zwraca obiekt klasy `Location` znajdujący się na pozycji (x, y). Metoda zakł
 
 Reprezentuje **gracza** poprzez jego aktualną pozycję w świecie gry. (patrz: koordynaty świata)
 
-#### Konstruktor `__init__(self, x, y)`
+#### Konstruktor `__init__(self, x, y, hp)`
 
 `x` i `y` to liczby całkowite określające pozycję gracza.
+`hp` jest liczbą całkowitą określającą **Punkty Życia** gracza.
 
 ## `main.py`
 
 ### Zmienne globalne
+`mapp` - dwuwymiarowa tablica liczb zawierająca mapę.
 
-`game_running` to zmienna boolowska kontrolująca główną pętlę gry.
+`world` - instancja klasy `World`.
 
-`world` to instancja klasy `World`.
+`hero` - instancja klasy `Character`, `hero.x` oraz `hero.y` są inicjalizowane do pozycji startowej, z której gracz rozpoczyna grę.
 
-`hero` to instancja klasy `Character`, `hero.x` oraz `hero.y` są inicjalizowane do pozycji startowej, z której gracz rozpoczyna grę.
+`Ended` - zmienna boolowska kontrolująca główną pętlę gry.
 
-`keys` to słownik wiążący nazwy możliwych akcji podejmowanych przez gracza z odpowiadającymi im klawiszami.
+`EndCoordinates` - lista zawierająca pozycję końcowej lokacji.
 
-Program rozpoczyna się od następującego kawałka kodu:
+`wrongAction` - zmienna boolowska pozwalająca wydrukować komunikat gdy gracz poda niewłaściwe polecenie.
+
+`keys` - słownik wiążący nazwy możliwych akcji podejmowanych przez gracza z odpowiadającymi im klawiszami.
+
+`counterx`, `countery` służą by ustalić lokację końcową gry
+
+Program wykonuje dwie pętle `for`, służące do ustalenia koordynat końcowej lokacji oraz by dodać do mapy losowe pułapki.
+
+Program wtedy rozpoczyna główną pętlę kodu:
 
 ```
-while game_running:
-    clearScreen()
-    loop()
+while not Ended:
+    mainLoop()
 ```
-
-W każdej iteracji czyszczony jest ekran, a następnie wykonywana jest kolejna iteracji pętli gry `loop`.
 
 ### Funkcje
 
@@ -119,7 +124,7 @@ W każdej iteracji czyszczony jest ekran, a następnie wykonywana jest kolejna i
 
 Czyści ekran konsoli, wywołując komendę odpowiednią dla danego systemu operacyjnego.
 
-#### `loop()`
+#### `mainLoop()`
 
 Zawiera całą interakcję z użytkownikiem.
 
