@@ -2,12 +2,12 @@ from random import randint
 import os
 from classes import *
 
-mapp = [[1,2, 1, 0, 2, 4, 1, 1, 1, 1, 1],
+mapp = [[1, 2, 1, 0, 2, 4, 1, 1, 1, 1, 1],
         [0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 4],
         [0, 1, 1, 0, 0, 1, 1, 1, 4, 0, 1],
         [1, 4, 0, 2, 0, 5, 4, 0, 1, 0, 1],
         [1, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1],
-        [1, 2, 0, 4, 0, 1, 0, 0, 1, 0, 1],
+        [1, 2, 1, 4, 0, 1, 0, 0, 1, 0, 1],
         [0, 0, 1, 1, 0, 4, 0, 0,'E',0, 1],
         [1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1],
         [5, 0, 1, 5, 1, 0, 1, 1, 1, 1, 0]]
@@ -102,7 +102,7 @@ def printChoice(x, y, option_name):
             print(getFullOptionName(option_name), loc.same_room)
 
 def printMenu():
-    print(f"Najwyraźniej, twoja lokalizacja to: {hero.x}, {hero.y}")
+    print(f"Twoja lokalizacja to: {hero.x}, {hero.y}")
     print("\nKompas wskazuje:", EndDirection())
     print("Twoje zdrowie to:", hero.hp, '\n')
     printChoice(hero.x - 1, hero.y, "a")
