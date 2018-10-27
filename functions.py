@@ -1,4 +1,5 @@
 from random import randint
+import os
 
 def clearScreen():              ##Wieloplatformowość
     os.system('cls' if os.name=='nt' else 'clear')
