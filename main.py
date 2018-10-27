@@ -134,7 +134,7 @@ def ChangeRooms():
     elif str(world.data[hero.y][hero.x]) == '4_1':
         world.data[hero.y][hero.x] = '4_2'
     elif str(world.data[hero.y][hero.x]) == '4_2':
-        hero.hp = 4
+        hero.hp -= 6
         world.data[hero.y][hero.x] = '5'
         
 def checkinput(player_choice):
