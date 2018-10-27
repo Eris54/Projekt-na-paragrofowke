@@ -3,7 +3,7 @@ from random import randint
 from classes import *
 
 ##Mapa
-mapp = [[1,2, 1, 0, 2, 4, 1, 1, 1, 1, 1],
+mapp = [[1, 2, 1, 0, 2, 4, 1, 1, 1, 1, 1],
         [0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 4],
         [0, 1, 1, 0, 0, 1, 1, 1, 4, 0, 1],
         [1, 4, 0, 2, 0, 5, 4, 0, 1, 0, 1],
@@ -36,7 +36,9 @@ for i in world.data:
         counterx += 1
     countery +=1
     counterx = 0
-
+del counterx
+del countery
+        
 keys = {
     'w': "Północ:",
     's': "Południe:",
