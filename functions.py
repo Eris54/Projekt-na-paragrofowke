@@ -5,7 +5,7 @@ def clearScreen():              ##Wieloplatformowość
     os.system('cls' if os.name=='nt' else 'clear')
 
 def mainLoop():
-    global wrongAction
+    global wrongAction, Ended
     clearScreen()
 
     if hero.hp <= 0:
