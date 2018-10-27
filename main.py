@@ -28,7 +28,8 @@ keys = {
     'e': "Zjeść ze stołu?"
 }
 
-def clearScreen():              ##Wieloplatformowość
+##Funkcje
+def clearScreen():
     os.system('cls' if os.name=='nt' else 'clear')
 
 def mainLoop():
