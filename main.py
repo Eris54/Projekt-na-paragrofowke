@@ -14,7 +14,7 @@ mapp = [[1, 2, 1, 0, 2, 4, 1, 1, 1, 1, 1],
 
 world = World(mapp)
 hero = Character(0, 0, 20)
-Ended = False
+ended = False
 wrongAction = False
 
 keys = {
@@ -31,12 +31,12 @@ def clearScreen():
     os.system('cls' if os.name=='nt' else 'clear')
 
 def mainLoop():
-    global wrongAction, Ended
+    global wrongAction, ended
     clearScreen()
 
     if hero.hp <= 0:
         print('Twój bohater zginął.\nPrzegrałeś!')
-        Ended = 1
+        ended = 1
         return 0
 
     if wrongAction:
@@ -47,15 +47,15 @@ def mainLoop():
     printMenu()
     player_choice = input("Wybierz kierunek: ")
     dir_x, dir_y = checkinput(player_choice)
-    ChangeRooms()
+    changeRooms()
     moveHero(dir_x, dir_y)
     if world.data[hero.y][hero.x] == 'E':
-        Ended = 1
+        ended = 1
         print("Udało się ukończyć grę!\n gratulacje!")
         input("Naciśnij enter by zakończyć przygodę!")
 
 
-def AddTraps(where):
+def addTraps(where):
     for i in range(12):  ##Dodawanie losowych pułapek
         x = randint(0, where.width)
         y = randint(0, where.height)
@@ -63,7 +63,7 @@ def AddTraps(where):
             where.data[y-1][x-1] = '1_1'
     return where.data
 
-def FindEnd(where):
+def findEnd(where):
     counterx, countery = 0, 0
     for i in where.data:
         for j in i:
@@ -73,15 +73,15 @@ def FindEnd(where):
         countery +=1
         counterx = 0
 
-def EndDirection():
+def endDirection():
     String = ""
-    if hero.y > EndCoordinates[1] + 1:
+    if hero.y > endCoordinates[1] + 1:
         String += "północny "
-    elif hero.y < EndCoordinates[1] - 1:
+    elif hero.y < endCoordinates[1] - 1:
         String += "południowy "
-    if hero.x > EndCoordinates[0] + 1:
+    if hero.x > endCoordinates[0] + 1:
         String += "zachód."
-    elif hero.x < EndCoordinates[0] - 1:
+    elif hero.x < endCoordinates[0] - 1:
         String += "wschód."
     if String == "południowy ":
         String = "południe."
@@ -89,22 +89,22 @@ def EndDirection():
         String = "północ."
     return String
 
-def getFullOptionName(option_name):
-    return f"[{option_name}] {keys[option_name]}"
+def getFullOptionName(key_name):
+    return f"[{key_name}] {keys[key_name]}"
 
-def printChoice(x, y, option_name):
+def printChoice(x, y, key_name):
     if x == None and y == None:
-        print(getFullOptionName(option_name))
+        print(getFullOptionName(key_name))
     elif world.exist(x, y):
         loc = world.getAt(x, y)
         if world.data[hero.y][hero.x] != world.data[y][x]:
-            print(getFullOptionName(option_name), loc.short_desc)
+            print(getFullOptionName(key_name), loc.short_desc)
         elif world.data[hero.y][hero.x] == world.data[y][x]:
-            print(getFullOptionName(option_name), loc.same_room)
+            print(getFullOptionName(key_name), loc.same_room)
 
 def printMenu():
     print(f"Twoja lokalizacja to: {hero.x}, {hero.y}")
-    print("\nKompas wskazuje:", EndDirection())
+    print("\nKompas wskazuje:", endDirection())
     print("Twoje zdrowie to:", hero.hp, '\n')
     printChoice(hero.x - 1, hero.y, "a")
     printChoice(hero.x + 1, hero.y, "d")
@@ -128,7 +128,7 @@ def moveHero(direction_x, direction_y):
     else:
         wrongAction = True
         
-def ChangeRooms():
+def changeRooms():
     if str(world.data[hero.y][hero.x]) == '1_1':  ##Zmienianie odwiedzonych pokoi
         hero.hp -= 2
         world.data[hero.y][hero.x] = '1'
@@ -168,10 +168,10 @@ def checkinput(player_choice):
 
     return direction_x, direction_y
 
-world.data = AddTraps(world)
-EndCoordinates = FindEnd(world)
+world.data = addTraps(world)
+endCoordinates = findEnd(world)
 print("Uciekając przed bandytami, postanowiłeś się ukryć w pewnej jaskinii.\nNiestety potknąłeś się wpadając do lochów.\nTwój magiczny kompas wskazuje wyjście.")
 input("Naciśnij Enter by zacząć grę!")
 
-while not Ended:
+while not ended:
     mainLoop()

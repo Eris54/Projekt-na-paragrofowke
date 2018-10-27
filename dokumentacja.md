@@ -87,7 +87,7 @@ Reprezentuje **gracza** poprzez jego aktualną pozycję w świecie gry. (patrz: 
 #### Konstruktor `__init__(self, x, y, hp)`
 
 `x` i `y` to liczby całkowite określające pozycję gracza.
-`hp` jest liczbą całkowitą określającą **Punkty Życia** gracza.
+`hp` jest liczbą całkowitą określającą **punkty Życia** gracza.
 
 ## `main.py`
 
@@ -98,13 +98,13 @@ Reprezentuje **gracza** poprzez jego aktualną pozycję w świecie gry. (patrz: 
 
 `hero` - instancja klasy `Character`, `hero.x` oraz `hero.y` są inicjalizowane do pozycji startowej, z której gracz rozpoczyna grę.
 
-`Ended` - zmienna boolowska kontrolująca główną pętlę gry.
+`ended` - zmienna boolowska kontrolująca główną pętlę gry.
 
-`EndCoordinates` - lista zawierająca pozycję końcowej lokacji.
+`endCoordinates` - lista zawierająca pozycję końcowej lokacji.
 
 `wrongAction` - zmienna boolowska pozwalająca wydrukować komunikat gdy gracz poda niewłaściwe polecenie.
 
-`keys` - słownik wiążący nazwy możliwych akcji podejmowanych przez gracza z odpowiadającymi im klawiszami.
+`keys` - słownik wiążący klawisze z odpowiadającymi im nazwami opcji.
 
 Program wykonuje dwie funkcje, służące do ustalenia koordynat końcowej lokacji oraz by dodać do mapy losowe pułapki, następnie drukuje wiadomość rozpoczęcia gry.
 
@@ -117,11 +117,14 @@ while not Ended:
 
 ## functions.py
 
-#### `AddTraps(where)`
-Dodaje losowo ustawione pułapki do obiektu `where`.
+#### `addTraps(where)`
+Dodaje losowo ustawione pułapki do obiektu `where`. Zwraca zmodyfikowane `where.data`.
 
-#### `FindEnd(where)`
-Znajduje lokację końcową w obiekcie `where`.
+#### `findEnd(where)`
+Znajduje lokację końcową w obiekcie `where` i zwraca ją w postaci listy, gdzie pierwszy element to pozycja x, a drugi - pozycja y.
+
+#### `endDirection()
+Zwraca łańcuch znaków reprezentujący kierunek, w jakim znajduje się wyjściowa lokacja, w odniesieniu do pozycji gracza.
 
 #### `clearScreen()`
 Czyści ekran konsoli, wywołując komendę odpowiednią dla danego systemu operacyjnego.
@@ -132,32 +135,33 @@ Zawiera całą interakcję z użytkownikiem.
 #### `printCurrentLocation()`
 Wypisuje długi opis `long_desc` lokacji, w której obecnie znajduje się gracz.
 
-#### `printChoices()`
+#### `printMenu()`
 Wypisuje pozycję gracza, kierunek świata w którym znajduje się cel, zdrowie gracza i wszystkie możliwe opcje i kierunki, w jakich gracz może się w danej sytuacji poruszyć. Innymi słowy, prezentuje krótkie opisy `short_desc` lokacji sąsiadujących do tej, w której gracz się obecnie znajduje. Jeśli typ lokacji jest taki sam, jak ten w której znajduje się gracz, to wyświetla `same_room`.
 
-#### `printMenu(x, y, option_name)`
-Wypisuje wybór w formacie: `{nazwa_opcji}: {krótki_opis_lokacji}`. `x`, `y` to liczby całkowite opisujące pozycję (x, y) lokacji, a `option_name` to łańcuch znaków wskazujący na jeden z kierunków świata - `"polnoc"`, `"wschod"`, `"poludnie"`, `"zachod"`. `nazwa_opcji` jest uzyskiwana dzięki wywołaniu funkcji `getFullOptionName(option_name)`.
+#### `printChoice(x, y, key_name)`
+Wypisuje wybór w formacie: `{nazwa_opcji}: {krótki_opis_lokacji}`. `x`, `y` to liczby całkowite opisujące pozycję (x, y) lokacji, a `key_name` to łańcuch znaków wskazujący na klawisz powiązany z daną opcją. `nazwa_opcji` jest uzyskiwana dzięki wywołaniu funkcji `getFullOptionName(key_name)`.
 Jeśli `x` i `y` są puste, wypisuje opcje niezwiązane z położeniem.
 
-#### `getFullOptionName(option_name)`
-Zwraca łańcuch znaków postaci `[{klawisz}] {nazwa_opcji}`, gdzie `nazwa_opcji` to przekazany do tej funkcji łańcuch znaków `option_name`, a `klawisz` to klawisz odpowiadający danej opcji, pozyskiwany ze słownika `keys` (patrz: zmienne globalne).
+#### `getFullOptionName(key_name)`
+Zwraca łańcuch znaków postaci `[{klawisz}] {nazwa_opcji}`.
 
 #### `checkInput(player_choice)`
+Sprawdza łańuch znaków wprowadzony przez gracza i odpowiednio na niego reaguje.
+
 Zwraca kierunek wybrany przez gracza reprezentowany przez dwie liczby całkowite, kolejno `direction_x` (`-1` - zachód, `1` - wschód) oraz `direction_y` (`-1` - połnóc, `1` - południe) (patrz: koordynaty świata). Gracz nie może poruszać się na ukos, stąd zawsze jedna z tych zwracanych wartości jest równa 0.
 
-Wewnętrznie funkcja ta porównuje przekazany od gracza łańuch znaków `player_choice` z definicjami klawiszy zawartymi w słowniku `keys` (patrz: zmienne globalne) i na tej podstawie określa wartości dla `direction_x` i `direction_y`.
-
-
-#### `ChangeRooms()`
-Zmienia pokój w którym przebywa gracz jeśli ta opcja jest możliwa.
+#### `changeRooms()`
+Zmienia pokój, w którym przebywa gracz, jeśli ta opcja jest możliwa.
 
 #### `moveHero(direction_x, direction_y)`
 Zmienia pozycję gracza na `next_pos_x = hero.x + direction_x` i `next_pos_y = hero.y + direction_y`, jeśli lokacja na pozycji (`next_pos_x`, `next_pos_y`) istnieje.
 `direction_x` i `direction_y` to liczby całkowite określające przesunięcie gracza w świecie. (patrz: koordynaty świata)
 
+Jeśli lokacja, do której gracz chce się udać, nie istnieje, zmienna globalna `wrongAction` jest ustawiana na `True`.
+
 # Wkład pracy
 
-[justcosmic/bartek] - programowanie, stworzenie dokumentacji.
+Bartłomiej Zięba - programowanie, stworzenie dokumentacji.
 
-[OrN/kacper] - programowanie, korekta dokumentacji, fabuła, usprawnianie gry.
+Kacper Tomasik - programowanie, korekta dokumentacji, fabuła, usprawnianie gry.
 
