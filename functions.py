@@ -20,6 +20,7 @@ def mainLoop():
     printCurrentLocation()
     printMenu()
     player_choice = input("Wybierz kierunek: ")
+    ChangeRooms()
     dir_x, dir_y = checkinput(player_choice)
     moveHero(dir_x, dir_y)
     if world.data[hero.y][hero.x] == 'E':
@@ -99,12 +100,7 @@ def moveHero(direction_x, direction_y):
         hero.y = next_pos_y
     else:
         wrongAction = True
-
-def checkinput(player_choice):
-    player_choice.lower()
-    direction_x = 0
-    direction_y = 0
-
+def ChangeRooms():
     if str(world.data[hero.y][hero.x]) == '1_1':  ##Zmienianie odwiedzonych pokoi
         hero.hp -= 2
         world.data[hero.y][hero.x] = '1'
@@ -113,6 +109,11 @@ def checkinput(player_choice):
     elif str(world.data[hero.y][hero.x]) == '4_2':
         hero.hp = 4
         world.data[hero.y][hero.x] = '5'
+        
+def checkinput(player_choice):
+    player_choice.lower()
+    direction_x = 0
+    direction_y = 0
 
     if player_choice == 'w':
         direction_y = -1
