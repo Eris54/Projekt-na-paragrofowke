@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 from random import randint
 import os
 from classes import *
@@ -36,8 +35,9 @@ def mainLoop():
     clearScreen()
 
     if hero.hp <= 0:
-        print('Twój bohater zginął.\nPrzegrałeś!')
+        print('Twój bohater zginął.\nPrzegrałeś!\n\nNaciśnij Enter by zakończyć przygodę.')
         ended = 1
+        input()
         return 0
 
     if wrongAction:
@@ -52,7 +52,7 @@ def mainLoop():
     moveHero(dir_x, dir_y)
     if world.data[hero.y][hero.x] == 'E':
         ended = 1
-        print("Udało się ukończyć grę!\n gratulacje!")
+        print("Udało się ukończyć grę!\n\t\tGratulacje!")
         input("Naciśnij enter by zakończyć przygodę!")
 
 
@@ -76,17 +76,17 @@ def findEnd(where):
 
 def endDirection():
     String = ""
-    if hero.y > endCoordinates[1] + 1:
+    if hero.y >= endCoordinates[1]:
         String += "północny "
-    elif hero.y < endCoordinates[1] - 1:
+    elif hero.y < endCoordinates[1]:
         String += "południowy "
-    if hero.x > endCoordinates[0] + 1:
+    if hero.x >= endCoordinates[0]:
         String += "zachód."
-    elif hero.x < endCoordinates[0] - 1:
+    elif hero.x < endCoordinates[0]:
         String += "wschód."
-    if String == "południowy " or(hero.y > endCoordinates[1] -1 and hero.y < endCoordinates[1] +1):
+    if hero.y < endCoordinates[1] and hero.x == endCoordinates[0]:
         String = "południe."
-    elif String == "północny " or(hero.x > endCoordinates[0] -1 and hero.x < endCoordinates[1] +1):
+    elif hero.y > endCoordinates[1] and hero.x == endCoordinates[0]:
         String = "północ."
     return String
 
