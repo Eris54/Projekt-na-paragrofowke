@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from random import randint
 import os
 from classes import *
@@ -83,9 +84,9 @@ def endDirection():
         String += "zachód."
     elif hero.x < endCoordinates[0] - 1:
         String += "wschód."
-    if String == "południowy ":
+    if String == "południowy " or(hero.y > endCoordinates[1] -1 and hero.y < endCoordinates[1] +1):
         String = "południe."
-    elif String == "północny ":
+    elif String == "północny " or(hero.x > endCoordinates[0] -1 and hero.x < endCoordinates[1] +1):
         String = "północ."
     return String
 
