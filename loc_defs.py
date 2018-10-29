@@ -90,7 +90,7 @@ def neutralRoom():
             ['pokoj_czarnoksieznika'])
 
 
-def exit():
+def exitLocation():
     return Location(
             'wyjscie',
             ['wyjscie'])
@@ -101,7 +101,7 @@ loc_generators: {
     2: diningRoom,
     3: scaryRoom,
     4: neutralRoom,
-    5: exit,
+    5: exitLocation,
 }
 
 
