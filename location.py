@@ -1,21 +1,12 @@
-gameState = GameState()
-
-class GameState:
-    world = World() 
-    hero = Hero(0, 0)
-
-    def getPlayerLocation():
-        return world.getAt(hero.x, hero.y)
-
-
 class Action:
-    def __init__(self, action_type, times, action):
+    def __init__(self, action_type, max_times, action):
         self.action_type = action_type
-        self.times = times
+        self.times = 0
+        self.times = max_times
         self.action = action
 
     def trigger():
-        times -= 1
+        times += 1
         self.action()
 
 
@@ -27,9 +18,10 @@ class PlayerAction(Action):
 
 
 class Location:
-    def __init__(self):
-        self.short_desc_key = ""
-        self.long_desc_keys = []
+    def __init__(self, short_desc, long_desc = [], same_room_short_desc = ""):
+        self.short_desc_key = short_desc
+        self.long_desc_keys = long_desc
+        self.same_room_short_desc_key = same_room_short_desc
         self.custom_actions = {}
 
     def addAction(action):
@@ -38,8 +30,9 @@ class Location:
     def triggerAction(action_type):
         action = self.custom_actions[action_type]
         action.trigger()
-        if action.times == 0:
+        if action.times >= action.max_times:
             del self.custom_actions[action_type]
 
     def triggerPlayerAction(key):
         self.triggerAction(f"player:{key}")
+
