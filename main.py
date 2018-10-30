@@ -14,7 +14,7 @@ mapp =  [[1, 2, 1, 0, 2, 4, 1, 1, 1, 1, 1],
 world = World(mapp)
 hero = Character(0, 0, 20)
 ended = False
-endCoordinates = world.FindEnd()
+EndCoordinates = world.FindEnd()
 wrongAction = False
 
 keys = {
@@ -34,7 +34,7 @@ def mainLoop():
     WrongActionPopUp()
     if hero.IsDead(): return 1
     printCurrentLocation()
-    printChoices()
+    printMenu()
     player_choice = input("Wybierz kierunek: ")
     dir_x, dir_y = checkinput(player_choice)
     changeRooms(player_choice)
@@ -70,17 +70,10 @@ def WrongActionPopUp():
 def getFullOptionName(key_name):
     return f"[{key_name}] {keys[key_name]}"
 
-def printChoice(x, y, key_name):
-    if x == None and y == None:
-        print(getFullOptionName(key_name))
-    elif world.exist(x, y):
-        loc = world.getAt(x, y)
-        if world.data[hero.y][hero.x] != world.data[y][x]:
-            print(getFullOptionName(key_name), loc.short_desc)
-        elif world.data[hero.y][hero.x] == world.data[y][x]:
-            print(getFullOptionName(key_name), loc.same_room)
+def printCurrentLocation():
+    print(f"{world.getAt(hero.x, hero.y).long_desc}")
 
-def printChoices():
+def printMenu():
     print(f"Najwyraźniej, twoja lokalizacja to: {hero.x}, {hero.y}")
     print("\nKompas wskazuje:", EndDirection())
     print("Twoje zdrowie to:", hero.hp, '\n')
@@ -93,30 +86,15 @@ def printChoices():
     elif str(world.data[hero.y][hero.x]) == '4':
         printChoice(None, None, 'q')
 
-def printCurrentLocation():
-    print(f"{world.getAt(hero.x, hero.y).long_desc}")
-
-def moveHero(direction_x, direction_y):
-    global wrongAction
-    next_pos_x = hero.x + direction_x
-    next_pos_y = hero.y + direction_y
-    if world.exist(next_pos_x, next_pos_y):
-        hero.x = next_pos_x
-        hero.y = next_pos_y
-    else:
-        wrongAction = True
-
-def changeRooms(a):
-    if str(world.data[hero.y][hero.x]) == '1_1':
-        hero.hp -= 2
-        world.data[hero.y][hero.x] = '1'
-    elif str(world.data[hero.y][hero.x]) == '4' and a == q:
-        world.data[hero.y][hero.x] = '4_1'
-    elif str(world.data[hero.y][hero.x]) == '4_1':
-        world.data[hero.y][hero.x] = '4_2'
-    elif str(world.data[hero.y][hero.x]) == '4_2':
-        hero.hp -= 7
-        world.data[hero.y][hero.x] = '5'
+def printChoice(x, y, key_name):
+    if x == None and y == None:
+        print(getFullOptionName(key_name))
+    elif world.exist(x, y):
+        loc = world.getAt(x, y)
+        if world.data[hero.y][hero.x] != world.data[y][x]:
+            print(getFullOptionName(key_name), loc.short_desc)
+        elif world.data[hero.y][hero.x] == world.data[y][x]:
+            print(getFullOptionName(key_name), loc.same_room)
 
 def checkinput(player_choice):
     player_choice.lower()
@@ -144,6 +122,30 @@ def checkinput(player_choice):
         world.data[hero.y][hero.x] = '2_1'
 
     return direction_x, direction_y
+
+def changeRooms(a):
+    if str(world.data[hero.y][hero.x]) == '1_1':
+        hero.hp -= 2
+        world.data[hero.y][hero.x] = '1'
+    elif str(world.data[hero.y][hero.x]) == '4' and a == 'q':
+        world.data[hero.y][hero.x] = '4_1'
+    elif str(world.data[hero.y][hero.x]) == '4_1':
+        world.data[hero.y][hero.x] = '4_2'
+    elif str(world.data[hero.y][hero.x]) == '4_2':
+        hero.hp -= 7
+        world.data[hero.y][hero.x] = '5'
+
+def moveHero(direction_x, direction_y):
+    global wrongAction
+    next_pos_x = hero.x + direction_x
+    next_pos_y = hero.y + direction_y
+    if world.exist(next_pos_x, next_pos_y):
+        hero.x = next_pos_x
+        hero.y = next_pos_y
+    else:
+        wrongAction = True
+
+
 
 def GameEnded():
     if world.data[hero.y][hero.x] == 'E':
