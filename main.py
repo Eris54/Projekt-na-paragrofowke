@@ -20,7 +20,6 @@ def clearScreen():
 
 def mainLoop():
     global invalidPlayerMove, ended
-    clearScreen()
 
     if hero.hp <= 0:
         print('Twój bohater zginął.\nPrzegrałeś!\n\nNaciśnij Enter by zakończyć przygodę.')
@@ -89,8 +88,13 @@ def printCurrentLocation():
 
 def moveHero(direction_x, direction_y):
     global invalidPlayerMove
+
+    if direction_x == 0 and direction_y == 0:
+        return
+
     next_pos_x = hero.x + direction_x
     next_pos_y = hero.y + direction_y
+
     if world.exist(next_pos_x, next_pos_y):
         hero.x = next_pos_x
         hero.y = next_pos_y
@@ -122,5 +126,9 @@ def checkinput(player_choice):
 print("Uciekając przed bandytami, postanowiłeś się ukryć w pewnej jaskinii.\nNiestety potknąłeś się wpadając do lochów.\nTwój magiczny kompas wskazuje wyjście.")
 input("Naciśnij Enter by zacząć grę!")
 
+clearScreen()
+game_state.getPlayerLocation().triggerAction("visit")
+
 while not ended:
     mainLoop()
+    clearScreen()
