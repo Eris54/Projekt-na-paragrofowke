@@ -70,7 +70,7 @@ Koordynaty świata odpowiadają indeksom używanym z polem `data` obiektu klasy 
 #### Konstruktor `__init__(self, mapa)`
 
 Inicjalizuje objekt.
-`mapa` nadaje **mapę** światu.
+`mapa` nadaje **mapę** światu, specyfikuje wysokość i szerokość mapy oraz dodaje pułapki za pomocą funkcji `AddTraps`
 
 #### `exist(self, x, y)`
 
@@ -80,6 +80,13 @@ Zwraca wartość typu bool. Mówi, czy na pozycji (x, y) w świecie znajduje si�
 
 Zwraca obiekt klasy `Location` znajdujący się na pozycji (x, y). Metoda zakłada, że taki obiekt istnieje. Jego istnienie można sprawdzić za pomocą metody `exist`.
 
+#### `AddTraps(self, trapNum)`
+
+Dodaje do mapy losowo ułożone pułapki. `trapNum` jest liczbą pułapek.
+
+#### `findEnd(self)`
+Znajduje lokację końcową w obiekcie i zwraca ją w postaci listy, gdzie pierwszy element to pozycja x, a drugi - pozycja y.
+
 ### Klasa `Character`
 
 Reprezentuje **gracza** poprzez jego aktualną pozycję w świecie gry. (patrz: koordynaty świata)
@@ -88,6 +95,10 @@ Reprezentuje **gracza** poprzez jego aktualną pozycję w świecie gry. (patrz: 
 
 `x` i `y` to liczby całkowite określające pozycję gracza.
 `hp` jest liczbą całkowitą określającą **punkty Życia** gracza.
+
+#### `IsDead(self)`
+
+Funkcja sprawdzająca czy `self.hp` spadła do zera, wtedy zwraca wartość typu bool `True`.
 
 ## `main.py`
 
@@ -100,37 +111,35 @@ Reprezentuje **gracza** poprzez jego aktualną pozycję w świecie gry. (patrz: 
 
 `ended` - zmienna boolowska kontrolująca główną pętlę gry.
 
-`endCoordinates` - lista zawierająca pozycję końcowej lokacji.
+`endCoordinates` - lista zawierająca pozycję końcowej lokacji, jest wartością zwróconą przez funkcję `FindEnd()` w klasie World.
 
 `wrongAction` - zmienna boolowska pozwalająca wydrukować komunikat gdy gracz poda niewłaściwe polecenie.
 
 `keys` - słownik wiążący klawisze z odpowiadającymi im nazwami opcji.
 
-Program wykonuje dwie funkcje, służące do ustalenia koordynat końcowej lokacji oraz by dodać do mapy losowe pułapki, następnie drukuje wiadomość rozpoczęcia gry.
-
 Program wtedy rozpoczyna główną pętlę kodu:
 
 ```
-while not Ended:
-    mainLoop()
+while not ended:
+    ended = mainLoop()
 ```
 
-## functions.py
+## Funkcje
 
-#### `addTraps(where)`
-Dodaje losowo ustawione pułapki do obiektu `where`. Zwraca zmodyfikowane `where.data`.
-
-#### `findEnd(where)`
-Znajduje lokację końcową w obiekcie `where` i zwraca ją w postaci listy, gdzie pierwszy element to pozycja x, a drugi - pozycja y.
-
-#### `endDirection()
-Zwraca łańcuch znaków reprezentujący kierunek, w jakim znajduje się wyjściowa lokacja, w odniesieniu do pozycji gracza.
+#### `mainLoop()`
+Zawiera całą interakcję z użytkownikiem i zwraca wartość boolowską `True` jeśli gra się kończy.
 
 #### `clearScreen()`
 Czyści ekran konsoli, wywołując komendę odpowiednią dla danego systemu operacyjnego.
 
-#### `mainLoop()`
-Zawiera całą interakcję z użytkownikiem.
+#### `EndDirection()`
+Zwraca łańcuch znaków reprezentujący kierunek, w jakim znajduje się wyjściowa lokacja, w odniesieniu do pozycji gracza.
+
+#### `WrongActionPopUp()`
+Drukuje informację o źle wykonanej czynności jeśli taka miała miejsce w poprzedniej iteracji pętli gry.
+
+#### `getFullOptionName(key_name)`
+Zwraca łańcuch znaków postaci `[{klawisz}] {nazwa_opcji}`.
 
 #### `printCurrentLocation()`
 Wypisuje długi opis `long_desc` lokacji, w której obecnie znajduje się gracz.
@@ -141,9 +150,6 @@ Wypisuje pozycję gracza, kierunek świata w którym znajduje się cel, zdrowie 
 #### `printChoice(x, y, key_name)`
 Wypisuje wybór w formacie: `{nazwa_opcji}: {krótki_opis_lokacji}`. `x`, `y` to liczby całkowite opisujące pozycję (x, y) lokacji, a `key_name` to łańcuch znaków wskazujący na klawisz powiązany z daną opcją. `nazwa_opcji` jest uzyskiwana dzięki wywołaniu funkcji `getFullOptionName(key_name)`.
 Jeśli `x` i `y` są puste, wypisuje opcje niezwiązane z położeniem.
-
-#### `getFullOptionName(key_name)`
-Zwraca łańcuch znaków postaci `[{klawisz}] {nazwa_opcji}`.
 
 #### `checkInput(player_choice)`
 Sprawdza łańuch znaków wprowadzony przez gracza i odpowiednio na niego reaguje.
