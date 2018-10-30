@@ -3,7 +3,7 @@ import game_state
 
 world = game_state.world
 hero = game_state.hero
-ended = False
+gameFinished = False
 invalidPlayerMove = False
 
 keys = {
@@ -19,28 +19,37 @@ def clearScreen():
     os.system('cls' if os.name=='nt' else 'clear')
 
 def mainLoop():
-    global invalidPlayerMove, ended
+    if checkIfPlayerIsDead():
+        return
+    checkIfInvalidPlayerMove()
+    printCurrentLocation()
+    printMenu()
+    player_choice = input("Wybierz kierunek: ")
+    dir_x, dir_y = checkInput(player_choice)
+    moveHero(dir_x, dir_y)
 
-    if hero.hp <= 0:
-        print('Twój bohater zginął.\nPrzegrałeś!\n\nNaciśnij Enter by zakończyć przygodę.')
-        ended = 1
-        input()
-        return 0
+def checkIfPlayerIsDead():
+    global gameFinished
+    if hero.hp > 0:
+        return False
+    print('Twój bohater zginął.\nPrzegrałeś!\n\nNaciśnij Enter by zakończyć przygodę.')
+    gameFinished = 1
+    input()
+    return True
 
+def checkIfInvalidPlayerMove():
+    global invalidPlayerMove
     if invalidPlayerMove:
         print("Nie możesz tego zrobić!\n")
         invalidPlayerMove = 0
 
-    printCurrentLocation()
-    printMenu()
-    player_choice = input("Wybierz kierunek: ")
-    dir_x, dir_y = checkinput(player_choice)
-    moveHero(dir_x, dir_y)
-
+def checkIfPlayerReachedExit():
+    global gameFinished
     if world.data[hero.y][hero.x] == 'E':
-        ended = 1
+        gameFinished = 1
         print("Udało się ukończyć grę!\n\t\tGratulacje!")
         input("Naciśnij enter by zakończyć przygodę!")
+    
 
 """
 def endDirection():
@@ -102,7 +111,7 @@ def moveHero(direction_x, direction_y):
     else:
         invalidPlayerMove = True
         
-def checkinput(player_choice):
+def checkInput(player_choice):
     player_choice.lower()
     direction_x = 0
     direction_y = 0
@@ -129,6 +138,6 @@ input("Naciśnij Enter by zacząć grę!")
 clearScreen()
 game_state.getPlayerLocation().triggerAction("visit")
 
-while not ended:
+while not gameFinished:
     mainLoop()
     clearScreen()

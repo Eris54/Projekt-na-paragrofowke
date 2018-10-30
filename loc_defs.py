@@ -61,12 +61,6 @@ def takeAmuletAction():
 take_amulet_action = PlayerAction(1, "q", "Zabierz amulet", takeAmuletAction)
 
 
-def testAction():
-    game_state.hero.hp -= 1
-
-test_action = Action("visit", 10, testAction)
-
-
 # Location definitions
 
 def trapRoom():
@@ -108,12 +102,5 @@ def exitLocation():
     return Location(
             'wyjscie',
             ['wyjscie'])
-
-def testRoom():
-    room = Location(
-            'wyjscie',
-            ['wyjscie'])
-    room.addAction(test_action)
-    return room
 
 
