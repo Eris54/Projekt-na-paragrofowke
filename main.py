@@ -77,10 +77,11 @@ def printChoice(x, y, key_name):
         return
 
     loc = game_state.world.getAt(x, y)
-    if world.data[hero.y][hero.x] != world.data[y][x]:
-        print(getFullOptionName(key_name), loc.getShortDescription())
-    elif world.data[hero.y][hero.x] == world.data[y][x]:
+    cur_loc = game_state.getPlayerLocation()
+    if loc.isInGroupWith(cur_loc):
         print(getFullOptionName(key_name), loc.getSameRoomDescription())
+    else:
+        print(getFullOptionName(key_name), loc.getShortDescription())
 
 def printMenu():
     print(f"Twoja lokalizacja to: {hero.x}, {hero.y}")

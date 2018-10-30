@@ -33,7 +33,7 @@ class Hero:
 
 
 world = World(world_data.mapp) 
-hero = Hero(1, 2, 50)
+hero = Hero(2, 2, 50)
 
 def getPlayerLocation():
     return world.getAt(hero.x, hero.y)

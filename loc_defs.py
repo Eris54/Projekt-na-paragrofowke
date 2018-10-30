@@ -67,7 +67,7 @@ def trapRoom():
     room = Location(
             'male_drzwi',
             ['ciasny_korytarz'],
-            'dalszy_korytarz')
+            same_room_short_desc = 'dalszy_korytarz')
 
     if randomDecision(settings['trap_chance']):
         room.addAction(trap_action)
@@ -79,7 +79,8 @@ def diningRoom():
     room = Location(
             'ciezkie_drzwi',
             ['sala_obiadowa_jedzenie'],
-            'dalsza_jadalnia_stol')
+            same_room_short_desc = 'dalsza_jadalnia_stol',
+            group = "dining_room")
     room.addAction(eat_action)
     return room
 

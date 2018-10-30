@@ -25,11 +25,12 @@ class PlayerAction(Action):
 
 
 class Location:
-    def __init__(self, short_desc, long_desc = [], same_room_short_desc = ""):
+    def __init__(self, short_desc, long_desc = [], same_room_short_desc = "", group = ""):
         self.short_desc_key = short_desc
         self.long_desc_keys = long_desc
         self.same_room_short_desc_key = same_room_short_desc
         self.custom_actions = {}
+        self.group = group
 
     def addAction(self, action):
         self.custom_actions[action.action_type] = action
@@ -69,4 +70,7 @@ class Location:
                 act = self.custom_actions[act_type]
                 desc += f"[{act.key}] {act.description}\n"
         return desc
+
+    def isInGroupWith(self, other_location):
+        return self.group and (self.group == other_location.group)
 
