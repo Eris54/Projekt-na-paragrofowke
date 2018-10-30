@@ -14,7 +14,7 @@ mapp =  [[1, 2, 1, 0, 2, 4, 1, 1, 1, 1, 1],
 world = World(mapp)
 hero = Character(0, 0, 20)
 ended = False
-EndCoordinates = world.FindEnd()
+endCoordinates = world.findEnd()
 wrongAction = False
 
 keys = {
@@ -32,7 +32,7 @@ def mainLoop():
     global wrongAction
     clearScreen()
     WrongActionPopUp()
-    if hero.IsDead(): return 1
+    if hero.isDead(): return 1
     printCurrentLocation()
     printMenu()
     player_choice = input("Wybierz kierunek: ")
@@ -44,15 +44,15 @@ def mainLoop():
 def clearScreen():
     os.system('cls' if os.name=='nt' else 'clear')
 
-def EndDirection():
+def endDirection():
     String = ""
-    if hero.y > EndCoordinates[1]:
+    if hero.y > endCoordinates[1]:
         String += "północny "
-    elif hero.y < EndCoordinates[1]:
+    elif hero.y < endCoordinates[1]:
         String += "południowy "
-    if hero.x > EndCoordinates[0]:
+    if hero.x > endCoordinates[0]:
         String += "zachód."
-    elif hero.x < EndCoordinates[0]:
+    elif hero.x < endCoordinates[0]:
         String += "wschód."
     if String == "południowy ":
         String = "południe."
@@ -75,7 +75,7 @@ def printCurrentLocation():
 
 def printMenu():
     print(f"Najwyraźniej, twoja lokalizacja to: {hero.x}, {hero.y}")
-    print("\nKompas wskazuje:", EndDirection())
+    print("\nKompas wskazuje:", endDirection())
     print("Twoje zdrowie to:", hero.hp, '\n')
     printChoice(hero.x - 1, hero.y, "a")
     printChoice(hero.x + 1, hero.y, "d")

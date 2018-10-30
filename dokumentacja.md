@@ -80,9 +80,9 @@ Zwraca wartość typu bool. Mówi, czy na pozycji (x, y) w świecie znajduje si�
 
 Zwraca obiekt klasy `Location` znajdujący się na pozycji (x, y). Metoda zakłada, że taki obiekt istnieje. Jego istnienie można sprawdzić za pomocą metody `exist`.
 
-#### `AddTraps(self, trapNum)`
+#### `addTraps(self, trap_num)`
 
-Dodaje do mapy losowo ułożone pułapki. `trapNum` jest liczbą pułapek.
+Dodaje do mapy losowo ułożone pułapki. `trap_num` jest liczbą pułapek.
 
 #### `findEnd(self)`
 Znajduje lokację końcową w obiekcie i zwraca ją w postaci listy, gdzie pierwszy element to pozycja x, a drugi - pozycja y.
@@ -96,9 +96,9 @@ Reprezentuje **gracza** poprzez jego aktualną pozycję w świecie gry. (patrz: 
 `x` i `y` to liczby całkowite określające pozycję gracza.
 `hp` jest liczbą całkowitą określającą **punkty Życia** gracza.
 
-#### `IsDead(self)`
+#### `isDead(self)`
 
-Funkcja sprawdzająca czy `self.hp` spadła do zera, wtedy zwraca wartość typu bool `True`.
+Sprawdza czy `self.hp` jest mniejsze lub równe 0, zwraca wartość typu bool.
 
 ## `main.py`
 
@@ -132,10 +132,10 @@ Zawiera całą interakcję z użytkownikiem i zwraca wartość boolowską `True`
 #### `clearScreen()`
 Czyści ekran konsoli, wywołując komendę odpowiednią dla danego systemu operacyjnego.
 
-#### `EndDirection()`
+#### `endDirection()`
 Zwraca łańcuch znaków reprezentujący kierunek, w jakim znajduje się wyjściowa lokacja, w odniesieniu do pozycji gracza.
 
-#### `WrongActionPopUp()`
+#### `wrongActionPopUp()`
 Drukuje informację o źle wykonanej czynności jeśli taka miała miejsce w poprzedniej iteracji pętli gry.
 
 #### `getFullOptionName(key_name)`

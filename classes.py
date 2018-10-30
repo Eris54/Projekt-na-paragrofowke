@@ -37,7 +37,7 @@ class World:
         self.data = mapa
         self.width = len(self.data[0])
         self.height = len(self.data)
-        self.AddTraps(20)
+        self.addTraps(20)
 
     def exist(self, x, y):
         if x < 0 or x >= self.width:
@@ -49,14 +49,14 @@ class World:
     def getAt(self, x, y):
         return self.descriptions[str(self.data[y][x])]
 
-    def AddTraps(self, trapNum):
-        for i in range(trapNum):  ##Dodawanie losowych pułapek
+    def addTraps(self, trap_num):
+        for i in range(trap_num):  ##Dodawanie losowych pułapek
             x = randint(0, self.width-1)
             y = randint(0, self.height-1)
             if str(self.data[y][x]) == '1':
                 self.data[y][x] = '1_1'
 
-    def FindEnd(self):
+    def findEnd(self):
         counterx = 0
         countery = 0
         for i in self.data:
@@ -73,7 +73,7 @@ class Character:
         self.y = y
         self.hp = hp
 
-    def IsDead(self):
+    def isDead(self):
         if self.hp <= 0:
             input("Twój bohater zginął.\nPrzegrałeś!")
             return 1
