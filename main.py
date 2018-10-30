@@ -1,20 +1,20 @@
-from random import randint
 import os
 from classes import *
 
-mapp = [[1, 2, 1, 0, 2, 4, 1, 1, 1, 1, 1],
-        [0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 4],
-        [0, 1, 1, 0, 0, 1, 1, 1, 4, 0, 1],
-        [1, 4, 0, 2, 0, 5, 4, 0, 1, 0, 1],
-        [1, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1],
-        [1, 2, 1, 4, 0, 1, 0, 0, 1, 0, 1],
-        [0, 0, 1, 1, 0, 4, 0, 0,'E',0, 1],
-        [1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1],
-        [5, 0, 1, 5, 1, 0, 1, 1, 1, 1, 0]]
+mapp =  [[1, 2, 1, 0, 2, 4, 1, 1, 1, 1, 1],
+         [0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 4],
+         [0, 1, 1, 0, 0, 1, 1, 1, 4, 0, 1],
+         [1, 4, 0, 2, 0, 5, 4, 0, 1, 0, 1],
+         [1, 0, 0, 1, 0, 0, 1, 1, 1, 0, 1],
+         [1, 2, 1, 4, 0, 1, 0, 0, 1, 0, 1],
+         [0, 0, 1, 1, 0, 4, 0, 0,'E',0, 1],
+         [1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1],
+         [5, 0, 1, 5, 1, 0, 1, 1, 1, 1, 0]]
 
 world = World(mapp)
 hero = Character(0, 0, 20)
 ended = False
+endCoordinates = world.FindEnd()
 wrongAction = False
 
 keys = {
@@ -26,70 +26,47 @@ keys = {
     'e': "Zjeść ze stołu?"
 }
 
+
 ##Funkcje
+def mainLoop():
+    global wrongAction
+    clearScreen()
+    WrongActionPopUp()
+    if hero.IsDead(): return 1
+    printCurrentLocation()
+    printChoices()
+    player_choice = input("Wybierz kierunek: ")
+    dir_x, dir_y = checkinput(player_choice)
+    changeRooms(player_choice)
+    moveHero(dir_x, dir_y)
+    if GameEnded(): return 1
+
 def clearScreen():
     os.system('cls' if os.name=='nt' else 'clear')
 
-def mainLoop():
-    global wrongAction, ended
-    clearScreen()
+def EndDirection():
+    String = ""
+    if hero.y > EndCoordinates[1]:
+        String += "północny "
+    elif hero.y < EndCoordinates[1]:
+        String += "południowy "
+    if hero.x > EndCoordinates[0]:
+        String += "zachód."
+    elif hero.x < EndCoordinates[0]:
+        String += "wschód."
+    if String == "południowy ":
+        String = "południe."
+    elif String == "północny ":
+        String = "północ."
+    return String
 
-    if hero.hp <= 0:
-        print('Twój bohater zginął.\nPrzegrałeś!\n\nNaciśnij Enter by zakończyć przygodę.')
-        ended = 1
-        input()
-        return 0
-
+def WrongActionPopUp():
+    global wrongAction
     if wrongAction:
         print("Nie możesz tego zrobić!\n")
         wrongAction = 0
 
-    printCurrentLocation()
-    printMenu()
-    player_choice = input("Wybierz kierunek: ")
-    dir_x, dir_y = checkinput(player_choice)
-    changeRooms()
-    moveHero(dir_x, dir_y)
-    if world.data[hero.y][hero.x] == 'E':
-        ended = 1
-        print("Udało się ukończyć grę!\n\t\tGratulacje!")
-        input("Naciśnij enter by zakończyć przygodę!")
-
-
-def addTraps(where):
-    for i in range(12):  ##Dodawanie losowych pułapek
-        x = randint(0, where.width)
-        y = randint(0, where.height)
-        if str(where.data[y-1][x-1]) == '1':
-            where.data[y-1][x-1] = '1_1'
-    return where.data
-
-def findEnd(where):
-    counterx, countery = 0, 0
-    for i in where.data:
-        for j in i:
-            if j == 'E':
-                return [counterx, countery]
-            counterx += 1
-        countery +=1
-        counterx = 0
-
-def endDirection():
-    String = ""
-    if hero.y >= endCoordinates[1]:
-        String += "północny "
-    elif hero.y < endCoordinates[1]:
-        String += "południowy "
-    if hero.x >= endCoordinates[0]:
-        String += "zachód."
-    elif hero.x < endCoordinates[0]:
-        String += "wschód."
-    if hero.y < endCoordinates[1] and hero.x == endCoordinates[0]:
-        String = "południe."
-    elif hero.y > endCoordinates[1] and hero.x == endCoordinates[0]:
-        String = "północ."
-    return String
-
+##Następne funkcje są do wyświetlanie menu
 def getFullOptionName(key_name):
     return f"[{key_name}] {keys[key_name]}"
 
@@ -103,9 +80,9 @@ def printChoice(x, y, key_name):
         elif world.data[hero.y][hero.x] == world.data[y][x]:
             print(getFullOptionName(key_name), loc.same_room)
 
-def printMenu():
-    print(f"Twoja lokalizacja to: {hero.x}, {hero.y}")
-    print("\nKompas wskazuje:", endDirection())
+def printChoices():
+    print(f"Najwyraźniej, twoja lokalizacja to: {hero.x}, {hero.y}")
+    print("\nKompas wskazuje:", EndDirection())
     print("Twoje zdrowie to:", hero.hp, '\n')
     printChoice(hero.x - 1, hero.y, "a")
     printChoice(hero.x + 1, hero.y, "d")
@@ -128,20 +105,19 @@ def moveHero(direction_x, direction_y):
         hero.y = next_pos_y
     else:
         wrongAction = True
-        
-def changeRooms():
-    if str(world.data[hero.y][hero.x]) == '1_1':  ##Zmienianie odwiedzonych pokoi
+
+def changeRooms(a):
+    if str(world.data[hero.y][hero.x]) == '1_1':
         hero.hp -= 2
         world.data[hero.y][hero.x] = '1'
-    
-    elif str(world.data[hero.y][hero.x]) == '4':
+    elif str(world.data[hero.y][hero.x]) == '4' and a == q:
         world.data[hero.y][hero.x] = '4_1'
     elif str(world.data[hero.y][hero.x]) == '4_1':
         world.data[hero.y][hero.x] = '4_2'
     elif str(world.data[hero.y][hero.x]) == '4_2':
-        hero.hp -= 6
+        hero.hp -= 7
         world.data[hero.y][hero.x] = '5'
-        
+
 def checkinput(player_choice):
     player_choice.lower()
     direction_x = 0
@@ -162,17 +138,21 @@ def checkinput(player_choice):
     elif player_choice == 'e' and str(world.data[hero.y][hero.x]) == '2':
         chance = randint(0,5)
         if chance <= 1:
-            hero.hp += randint(2, 6)
+            hero.hp += randint(1, 5)
         else:
-            hero.hp -= randint(1, 3)
+            hero.hp -= randint(3, 6)
         world.data[hero.y][hero.x] = '2_1'
 
     return direction_x, direction_y
 
-world.data = addTraps(world)
-endCoordinates = findEnd(world)
+def GameEnded():
+    if world.data[hero.y][hero.x] == 'E':
+        input("Gratulacje!\nTwojemu bohaterowi udało się znaleźć wyjście.\n Naciśnij enter by zakończyć przygodę!")
+        return 1
+
+##Początek gry
 print("Uciekając przed bandytami, postanowiłeś się ukryć w pewnej jaskinii.\nNiestety potknąłeś się wpadając do lochów.\nTwój magiczny kompas wskazuje wyjście.")
 input("Naciśnij Enter by zacząć grę!")
 
 while not ended:
-    mainLoop()
+    ended = mainLoop()
