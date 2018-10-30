@@ -1,3 +1,5 @@
+from random import randint
+
 class Location:
     def __init__(self, short_desc, long_desc, same_room = None):
         self.short_desc = short_desc
@@ -35,6 +37,7 @@ class World:
         self.data = mapa
         self.width = len(self.data[0])
         self.height = len(self.data)
+        self.AddTraps(20)
 
     def exist(self, x, y):
         if x < 0 or x >= self.width:
@@ -46,8 +49,31 @@ class World:
     def getAt(self, x, y):
         return self.descriptions[str(self.data[y][x])]
 
+    def AddTraps(self, trapNum):
+        for i in range(trapNum):  ##Dodawanie losowych pułapek
+            x = randint(0, self.width-1)
+            y = randint(0, self.height-1)
+            if str(self.data[y][x]) == '1':
+                self.data[y][x] = '1_1'
+
+    def FindEnd(self):
+        counterx = 0
+        countery = 0
+        for i in self.data:
+            for j in i:
+                if j == 'E':
+                    return [counterx, countery]
+                counterx += 1
+            countery +=1
+            counterx = 0
+
 class Character:
     def __init__(self, x, y, hp):
         self.x = x
         self.y = y
         self.hp = hp
+
+    def IsDead(self):
+        if self.hp <= 0:
+            input("Twój bohater zginął.\nPrzegrałeś!")
+            return 1
